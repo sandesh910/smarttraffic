@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Traffic System</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f8;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        .box {
+            background: white;
+            width: 350px;
+            margin: auto;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px #ccc;
+        }
+
+        input {
+            width: 90%;
+            padding: 8px;
+            margin: 10px;
+        }
+
+        button {
+            background: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>Smart Traffic Violation Checker 🚦</h2>
+
+    <input type="text" id="vehicleId" placeholder="Vehicle ID">
+
+    <input type="number" id="speed" placeholder="Speed">
+
+    <label>
+        Emergency Vehicle?
+        <input type="checkbox" id="emergency">
+    </label>
+
+    <br><br>
+
+    <button onclick="checkViolation()">Check Violation</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+    function checkViolation() {
+
+        let vehicleId = document.getElementById("vehicleId").value;
+        let speed = document.getElementById("speed").value;
+        let emergency = document.getElementById("emergency").checked;
+
+        fetch(`/traffic/check?vehicleId=${vehicleId}&speed=${speed}&emergency=${emergency}`)
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById("result").innerText = data;
+            });
+    }
+</script>
+
+</body>
+</html>
